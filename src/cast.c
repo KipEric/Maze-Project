@@ -16,16 +16,20 @@ void ray_cast(SDL_Instance ins)
 	int i, vtx = 0, htx = 0;
 	SDL_Rect top, map;
 
+	/* Setting ray screen */
 	top.x = 0, top.y = 0, top.w = SCREEN_WIDTH, top.h = 400;
 	map.x = 0, map.y = 0, map.w = (map_x * (map_s * MAP_SCALE));
 	map.h = (map_y * (map_s * MAP_SCALE));
+	
 	/* Sky color*/
 	SDL_SetRenderDrawColor(ins.ren, 30, 144, 255, 0);
 	SDL_RenderFillRect(ins.ren, &top);
 
+	/* Setting the color of the walls  */
 	SDL_SetRenderDrawColor(ins.ren, 76, 76, 76, 0);
 	SDL_RenderFillRect(ins.ren, &map);
 
+	/* Checking for collision of the ray to the wall */
 	ray_a = player.a - DR * 30, ray_a = FixAng(ray_a);
 	for (i = 0; i < num_rays; i++)
 	{
@@ -38,6 +42,8 @@ void ray_cast(SDL_Instance ins)
 			ray_x = vx, ray_y = vy, disT = vd, shade = 0.5, buff[i] = vd;
 			htx = vtx;
 		}
+
+		/* Color of the floor */
 		SDL_SetRenderDrawColor(ins.ren, 155, 0, 0, 0);
 		px = player.x * MAP_SCALE, py = player.y * MAP_SCALE;
 		rx = ray_x * MAP_SCALE, ry = ray_y * MAP_SCALE;
@@ -63,6 +69,7 @@ void horizontal_collision(float ray_a, float *hd, float *hx, float *hy, int *hmt
 	float ray_x, ray_y, xo, yo, a_tan;
 	int diff, val;
 
+	/* Calculation of ray horizontal position */
 	a_tan = -1 / tan(ray_a), diff = 0;
 	if (ray_a > PI)
 	{
@@ -109,6 +116,7 @@ void vertical_collision(float ray_a, float *vd, float *vx, float *vy, int *vmtx)
 	float ray_x, ray_y, xo, yo, a_tan;
 	int diff, val;
 
+	/* Calculation of ray vertical position */
 	a_tan = -tan(ray_a);
 	diff = 0;
 	if (ray_a == 0 || ray_a == PI)
