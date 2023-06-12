@@ -8,18 +8,24 @@
  */
 int init_instance(SDL_Instance *in)
 {
+	/* Initialize SDL */
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 		fprintf(stderr, "Unable to initialize SDL: %s\n", SDL_GetError());
-		return 1;
+		return (1);
 	}
-	in->win = SDL_CreateWindow("Eric Maze", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+
+	/* Create SDL window */
+	in->win = SDL_CreateWindow("Eric Maze", 0, 0,
+			SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
 	if (in->win == NULL)
 	{
 		fprintf(stderr, "Unable to create SDL_Window: %s\n", SDL_GetError());
 		SDL_Quit();
-		return 1;
+		return (1);
 	}
+
+	/* Create SDL renderer */
 	in->ren = SDL_CreateRenderer(in->win, -1, SDL_RENDERER_ACCELERATED
 			| SDL_RENDERER_PRESENTVSYNC);
 
@@ -27,14 +33,14 @@ int init_instance(SDL_Instance *in)
 	{
 		fprintf(stderr, "Unable to create Renderer: %s\n", SDL_GetError());
 		SDL_Quit();
-		return 1;
+		return (1);
 	}
 	if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
 	{
 		fprintf(stderr, "Failed to initialize image: %s\n", SDL_GetError());
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
 }
 
 /**
@@ -49,5 +55,5 @@ float FixAng(float a)
 		a -= 2 * PI;
 	if (a < 0)
 		a += 2 * PI;
-	return a;
+	return (a);
 }

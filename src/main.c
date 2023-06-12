@@ -11,25 +11,32 @@ enemy_t enemy;
 int main(int argc, char **argv)
 {
 	SDL_Instance instance;
+
+	/* Initializing SDL instance */
 	if (init_instance(&instance) != 0)
-		return 1;
+		return (1);
+	/* Initialize game */
 	init_game();
 	if (argc > 1)
 		make_map(argv);
-	while("game is running")
+	while ("game is running")
 	{
+		/* Clear screen */
 		SDL_SetRenderDrawColor(instance.ren, 255, 255, 255, 255);
 		SDL_RenderClear(instance.ren);
 
+		/* Handle poll events */
 		if (poll_events(instance) == 1)
 			break;
 		display(instance);
 		SDL_RenderPresent(instance.ren);
 	}
+
+	/* Clean and exit */
 	SDL_DestroyRenderer(instance.ren);
 	SDL_DestroyWindow(instance.win);
 	SDL_Quit();
-	return 0;
+	return (0);
 }
 /**
  * display - game window
@@ -39,6 +46,7 @@ int main(int argc, char **argv)
  */
 void display(SDL_Instance instance)
 {
+	/* Perform all actions */
 	ray_cast(instance);
 	add_enemy(instance);
 	draw_map(instance);

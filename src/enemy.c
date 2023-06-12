@@ -21,6 +21,7 @@ void add_weapon(SDL_Instance ins)
 	int w, h;
 	SDL_Surface *surf = IMG_Load("images/gn111.png");
 
+	/* Creating SDL surface texture */
 	if (surf)
 	{
 		SDL_SetColorKey(surf, SDL_TRUE, SDL_MapRGB(surf->format, 255, 255, 255));
@@ -55,6 +56,7 @@ void add_enemy(SDL_Instance ins)
 	int w, h, i;
 	float dx, dy, ds, sx, DPP, e_a, e_swidth, ex, e_d;
 
+	/* Initializing enemy */
 	for (i = 0; i < num_enemy; i++)
 	{
 		SDL_Surface *surf = IMG_Load(enemies[i].path);
